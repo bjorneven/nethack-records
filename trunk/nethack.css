@@ -90,7 +90,7 @@ a {
 }
 
 #main {
-	background:/*#D6BEA6;*/ /*#E0D1C2;*/ #dacab9;
+	background:/*#D6BEA6;*/ #E0D1C2; /* #dacab9;*/
 	color:#211000;
 	border:1px solid #222;	
 	margin:2em;
@@ -173,12 +173,12 @@ a {
 	text-align:right;
 }
 
-#main ul {
+#main ul.ranking {
 	list-style:none;
 	margin-left:20px;
 	padding:0;
 }
 
-#main ul li {
+#main ul.ranking li {
 	display:inline;
 }

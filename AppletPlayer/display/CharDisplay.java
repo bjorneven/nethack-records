@@ -1,7 +1,7 @@
 /**
  * CharDisplay -- a simple character display
  * --
- * $Id$
+ * $Id: CharDisplay.java 46 2004-03-06 01:19:11Z bjorn $
  * $timestamp: Thu Jul 24 15:19:18 1997 by Matthias L. Jugel :$
  *
  * This file is part of "The Java Telnet Applet".
@@ -41,7 +41,7 @@ import java.awt.Rectangle;
 
 /**
  * A simple character display.
- * @version $Id$
+ * @version $Id: CharDisplay.java 46 2004-03-06 01:19:11Z bjorn $
  * @author  Matthias L. Jugel, Marcus Meiﬂner
  */
 public class CharDisplay extends Panel

@@ -1,7 +1,7 @@
 /*
  * SoftFont -- a unicode softfont displayer
  * --
- * $Id$
+ * $Id: SoftFont.java 46 2004-03-06 01:19:11Z bjorn $
  *
  * This file is part of "The Java Telnet Applet".
  *

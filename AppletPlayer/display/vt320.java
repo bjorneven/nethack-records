@@ -1,7 +1,7 @@
 /*
  * vt320 -- a DEC VT320 Terminal emulation
  * --
- * $Id$
+ * $Id: vt320.java 46 2004-03-06 01:19:11Z bjorn $
  *
  * This file is part of "The Java Telnet Applet".
  *
@@ -101,7 +101,7 @@ import java.applet.Applet;
  *  <DT><TT>&lt;PARAM NAME="AF<I>nr</I>" VALUE="<I>string</I>"&gt</TT>
  *  <DD>Function keys (with the Alt-key pressed) from <I>AF1</I> to <I>AF20</I> are programmable too.
  * </DL>
- * @version $Id$
+ * @version $Id: vt320.java 46 2004-03-06 01:19:11Z bjorn $
  * @author  Matthias L. Jugel, Marcus Mei?ner
  */
 public class vt320 extends Terminal implements TerminalHost
@@ -109,7 +109,7 @@ public class vt320 extends Terminal implements TerminalHost
   /**
    * Return the version of the terminal emulation and its display.
    */
-  public String toString() { return "$Id$ "+display.version; }
+  public String toString() { return "$Id: vt320.java 46 2004-03-06 01:19:11Z bjorn $ "+display.version; }
 
   // the input handler takes the keyboard input from us.
   private TerminalHost host = this;

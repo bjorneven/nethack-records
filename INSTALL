@@ -1,13 +1,17 @@
 Installation Instructions
 -------------------------
 
-Nethack-Records requires Perl 5 and CGI capable webserver. It also requires HTML::Template installed,
-but I have included it in the distribution, no further installation is required on that part. 
-Put the script and all the templates in a cgi-enabled webfolder and it is good to go.
+Nethack-Records requires Perl 5 and CGI capable webserver.
+It also requires HTML::Template installed,
+but I have included it in the distribution, no further installation 
+is required on that part. Put the script and all the templates
+in a cgi-enabled webfolder and it is good to go.
 
-Oh, by the way, the scripts need access to the nethack-logfile, and you have to make sure it can
-read it by editiing the $LOGFILE path in records.cgi. If your webserver does not have access to the logfile
-directly you have to set up a cronjob or something to copy the file where the script can read it.
+Oh, by the way, the scripts need access to the nethack-logfile, 
+and you have to make sure it can read it by editing the "options.cfg"
+in the script dir. If your webserver does not have access to the logfile
+directly you have to set up a cronjob or something to copy the
+file where the script can read it.
 
 Mail support questions to s1393 at ii.uib.no
 

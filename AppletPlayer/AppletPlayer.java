@@ -59,6 +59,7 @@ public class AppletPlayer extends Applet{
         control.add(stop);
         control.add(play);
         control.add(next);
+        control.add(nextb);
         control.add(sleepInput);        
         add("North",control);
         setSize(640,480);
@@ -86,7 +87,7 @@ public class AppletPlayer extends Applet{
                                new ActionListener(){
                                    public void actionPerformed(ActionEvent e){
                                        System.out.println("prev"); 
-                                       loadFrame(--currentFrame);
+                                       loadFrame(--currentFrame,false);
                                    }
                                }
                                );
@@ -115,7 +116,7 @@ public class AppletPlayer extends Applet{
                                new ActionListener(){
                                    public void actionPerformed(ActionEvent e){
                                        System.out.println("next"); 
-                                       if (loadFrame(currentFrame++)==-1)
+                                       if (loadFrame(currentFrame++,false)==-1)
                                            drawThread.halt();
                                        //                                       nextFrame(); 
                                        //                                       drawThread.next();
@@ -143,7 +144,9 @@ public class AppletPlayer extends Applet{
                                new ActionListener(){
                                    public void actionPerformed(ActionEvent e){
                                        System.out.println("next"); 
-//                                       printBytes(currentFrame++);
+                                       if (loadFrame(currentFrame++,true)==-1)
+                                           drawThread.halt();
+                                       //                                       printBytes(currentFrame++);
                                        //                                       nextFrame(); 
                                        //                                       drawThread.next();
                                    }
@@ -201,7 +204,7 @@ public class AppletPlayer extends Applet{
         }
     }
 
-    public int loadFrame(int no){
+    public int loadFrame(int no, boolean bp){
         try{
             if (no>=frameIndex.size()){                
                 no--;
@@ -209,15 +212,16 @@ public class AppletPlayer extends Applet{
                 return -1;        
             }    
             Frame frame = (Frame)frameIndex.get(no);            
-            System.out.println("Attempting to draw frame number "+no);
-//             if (no<currentFrame){
+            System.out.println("Attempting to draw frame number "+no+" Current frame is "+currentFrame);
+//            if (no<currentFrame){
                 reset();
                 iStream.skip(frame.getPos());                
-//             } else {
+  //          } else {
 //                 Frame temp = (Frame)frameIndex.get(currentFrame);                       
 //                 int diff = frame.getPos()-temp.getPos();
+//                 System.out.println("Diff is "+diff);                
 //                 iStream.skip(diff);
-//             }
+//            }
             int len = frame.getLen();
             byte[] drawData = new byte[len]; // The actual data that is to be drawn on the screen.           
             int pos = 0;
@@ -225,6 +229,13 @@ public class AppletPlayer extends Applet{
                 len = iStream.read(drawData, pos, len-pos);
                 pos = pos + len;
             }
+            System.out.println();            
+            if (bp){
+                for (int i = 0; i<drawData.length; i++)
+                    System.out.print(drawData[i]+" ");
+                System.out.println();
+            }
+            
             drawThread.insertByteArray(drawData);
             drawThread.next();
         }catch(Exception e){
@@ -298,7 +309,7 @@ public class AppletPlayer extends Applet{
             // display bug due to insufficient font compatibility) with a
             // a character that is supported. Optional future replacements
             // can be done in the same loop.
-            byte b[] = {0x1b,0x5b,0x32,0x4a};
+            byte b[] = {0x5b,0x32,0x4a};
             int x = 0;
             for ( int i = 0; i<a.length; i++){
                 if (a[i]==b[x]) {
@@ -376,7 +387,7 @@ public class AppletPlayer extends Applet{
         public void run(){
             while(true){
                 if (running){
-                    player.loadFrame(frame++);
+                    player.loadFrame(frame++,false);
                     try{
                         sleep(sleep);
                     }catch(InterruptedException e){

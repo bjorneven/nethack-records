@@ -1,4 +1,4 @@
-# $Id: optionsParser.pm,v 1.2 2004/02/29 03:17:36 s1393 Exp $
+# $Id$
 package optionsParser;
 
 my $line = 0;

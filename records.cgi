@@ -18,7 +18,7 @@ my $LOGFILE;
 my $URI;
 my $TEMPLATE;
 my $OPTIONS_FILE = "./options.cfg";
-my $VERSION = "0.5.0-svn, 05.03.2004";
+my $VERSION = "0.5.0-svn, 22.03.2004";
 my $CREATE_RDF;
 my $RDF_FILE;
 my %OPTIONS;
@@ -81,8 +81,8 @@ if ($sortType eq "today") {
     &stat('class',$q->param('class'));
 } elsif ($q->param('sex')) {
     &stat('sex',lc($q->param('sex')));
-} elsif ($q->param('desc')) {
-    &stat('death',lc($q->param('desc')));
+} elsif ($q->param('death')) {
+    &stat('death',lc($q->param('death')));
 } elsif ($q->param('alignment')) {
     &stat('alignment',lc($q->param('alignment')));
 } elsif ($q->param('game')) {
@@ -222,7 +222,7 @@ sub parseFile {
         
 
         my %record = ( name => lc($name),
-                        desc => $desc,
+                        death => $desc,
                         exp => $temp[1],
                         class => $class,
                         race => $race_map{$temp[12]},
@@ -299,7 +299,7 @@ sub genRSS {
                             race => $record{race},
                             alignment => $record{alignment},
                             sex => $record{sex},
-                            desc => $record{desc},
+                            death => $record{death},
                             place => $record{place},
                             date => $date,
                             color => $color,
@@ -380,7 +380,7 @@ sub commondeath {
     my $helpless = 0;
     foreach (@data) {
         my %r = %{$_};
-        my $desc = $r{desc};
+        my $desc = $r{death};
         my $desc1;
         my $desc2;
         if ($desc =~ /(.+?)\,(.+)/) {
@@ -394,13 +394,10 @@ sub commondeath {
     }
 
     # now sort..
-    foreach my $key (sort val (keys(%score))) {
-    my %tmp = (desc => $key, num => $score{$key});
-    push(@sortedscores,\%tmp);
+    foreach my $key (sort {$score{$b} <=> $score{$a}} (keys(%score))) {
+	    my %tmp = (death => $key, num => $score{$key});
+   	    push(@sortedscores,\%tmp);
     }
-        sub val {
-        $score{$b} <=> $score{$a};
-        }
 
     $template->param(SCORES => \@sortedscores);
     $template->param(helpless => $helpless);
@@ -429,7 +426,9 @@ sub stat {
     my @games;
     foreach (@data) {
         my %r = %{$_};
-        if (lc($r{$type_name}) =~ /^$type/i) {
+# 	this hack may cause unwanted functionality
+#       if (lc($r{$type_name}) =~ /^$type/i) {
+        if (lc($r{$type_name}) eq $type) {
             push(@games,\%r);
         }
     }
@@ -553,7 +552,7 @@ sub personStat {
     my %score;
     my $helpless = 0;
     foreach (@games) {
-        my $desc = $_->{desc};
+        my $desc = $_->{death};
         my $desc1;
         my $desc2;
         if ($desc =~ /(.+?)\,(.+)/) {
@@ -567,14 +566,11 @@ sub personStat {
     }
 
     # now sort by how many times one has died of this death
-    foreach my $key (sort hashValueDescendingNum (keys(%score))) {
-	my %tmp = (desc => $key, num => $score{$key});
+    foreach my $key (sort {$score{$b} <=> $score{$a}} (keys(%score))) {
+	my %tmp = (death => $key, num => $score{$key});
 	push(@sortedscores,\%tmp);
     }
 
-    sub hashValueDescendingNum {
-	$score{$b} <=> $score{$a};
-    }
 
     $template->param(SCORES => \@sortedscores);
     $template->param(helpless => $helpless);

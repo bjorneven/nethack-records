@@ -976,7 +976,7 @@ sub setOptions() {
                                 4 => "Sokoban",
                                 5 => "unknown (5)",
                                 6 => "unknown (6)",
-                                7 => "the Astral Planes." );
+                                7 => "the Astral Planes" );
                      
 # map shortnames to fullnames
     %al_map = ( Cha => "Chaotic",
@@ -995,7 +995,7 @@ sub setOptions() {
                   Gno => "Gnome"
                   );
     
-    %class_man = ('Arc' => 'Archeologist',
+    %class_man = ('Arc' => 'Archaeologist',
                   'Bar' => 'Barbarian',
                   'Cav' => 'Caveman',
                   'Elf' => 'Elf',
@@ -1010,7 +1010,7 @@ sub setOptions() {
                   'Val' => 'Valkyrie',
                   'Wiz' => 'Wizard'
                   );
-    %class_woman = ('Arc' => 'Archeologist',
+    %class_woman = ('Arc' => 'Archaeologist',
                     'Bar' => 'Barbarian',
                     'Cav' => 'Cavewoman',
                     'Elf' => 'Elf',

@@ -13,5 +13,5 @@ in the script dir. If your webserver does not have access to the logfile
 directly you have to set up a cronjob or something to copy the
 file where the script can read it.
 
-Mail support questions to s1393 at ii.uib.no
+Mail support questions to bjorn at wahlstroem dot org
 

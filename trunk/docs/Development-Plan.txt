@@ -18,9 +18,8 @@ Milestones for this project is set at version 0.5 and version 1.0.
 They should be feature complete, tested and be easy to install 
 for the end-user.
 
-Milestone 1 (version 0.5) is due before April 2004, and 
+milestone 1 (0.5) was reached 09.08.2004
 milestone 2 (1.0) is due late June 2004.
-
 
 * Development plan for milestone 1
 ----------------------------------

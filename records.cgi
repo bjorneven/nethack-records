@@ -3,7 +3,7 @@
 # Bjorn Even Wahlstrom "s1393 <at> ii.uib.no.NO.SPAM"
 #
 # $Id$
-# $URL: svn://fribyte.uib.no/nethack-records/branches/0.5-M1/records.cgi $
+# $URL$
 use strict;
 use lib './lib';
 use Time::Local;

@@ -48,10 +48,11 @@ public class AppletPlayer extends Applet{
     DrawThread drawThread;
     PlayThread playThread;
 
-    String filename = "helge.ttyrec";
+    String filename;
     Vector frameIndex = new Vector();
 
     public void init(){
+        filename = getParameter("record");
         setLayout(new BorderLayout());        
         Panel control = new Panel();
         control.add(prev);
@@ -301,7 +302,6 @@ public class AppletPlayer extends Applet{
             int x = 0;
             for ( int i = 0; i<a.length; i++){
                 if (a[i]==b[x]) {
-                    System.out.println("match "+x++);                    
                     if (x==b.length){
                         System.out.println("Clear screen");                    
                         x=0;
@@ -334,7 +334,15 @@ public class AppletPlayer extends Applet{
                         sleep(sleepLen);
                     }catch(Exception e){
                     }
-                } else yield();                
+                } else {
+                    try{
+                        sleep(100);
+                        yield();                
+                    }catch(InterruptedException e){
+                        System.out.println("Error, thread interrupted.");                        
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }   
@@ -373,6 +381,14 @@ public class AppletPlayer extends Applet{
                         sleep(sleep);
                     }catch(InterruptedException e){
                         System.out.println("Error, thread interrupted.");
+                        e.printStackTrace();
+                    }
+                } else{
+                    try{
+                        sleep(100);
+                        yield();                
+                    }catch(InterruptedException e){
+                        System.out.println("Error, thread interrupted.");                        
                         e.printStackTrace();
                     }
                 }

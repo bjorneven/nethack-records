@@ -1,0 +1,189 @@
+body {
+    background:#fff;
+    color:#000;
+	margin:0;
+	padding:0;
+}
+
+a {
+    background:transparent;
+    color:#000000;
+}
+
+#header {
+	background:#000;
+	color:#fff;
+	border-bottom:1px solid #666666;
+	margin:0;
+	padding:0;
+}
+
+#header img {
+    float:right;
+    border:none;
+}
+
+#header h1 {
+	margin:0 0 1.5em;	
+	padding-top:1em;
+	padding-left:1em;
+	font-size:1em;
+	font-family:courier, monospace;
+}
+
+#header h1 span {
+	font-size:4em;
+	font-style:italic;
+	font-weight:500;
+	margin-right:20px;
+	
+}
+#header .version {
+	float:right;
+}
+
+#header p {
+	padding-bottom:0;
+	margin:0em 1em 0.5em;
+
+
+}
+
+#navigation {
+	background:#fff;
+	color:#000;
+	margin:0 0 1em;
+	border-bottom:1px solid #000;
+}
+
+#navigation ul {
+	text-align:left;
+	margin:0;
+	padding:0 0.5em 0;
+	list-style:none;
+}
+
+#navigation ul li{
+	float:left;
+	background:#fff;
+	padding:0;
+	margin:0;
+}
+
+#navigation a {
+	text-decoration:none;
+	display:block;
+	padding:0 0.5em;
+	border-left:1px solid #000;
+	border-right:1px solid #000;
+	
+}
+
+#navigation a:hover {
+	background:#000;
+	color:#fff;
+}
+
+#navigation a:active {
+	background:#fff;
+	color:#000;
+}
+
+#main {
+	background:/*#D6BEA6;*/ #fff; /* #dacab9;*/
+	color:#000;
+	border:1px solid #000;	
+	margin:2em;
+	width:90%;
+}
+
+#main h2, #main h3 {
+	margin-left:20px;
+}
+
+#main table {
+    border:1px solid #000;
+	border-spacing:0px;
+    border-collapse:collapse;
+	width:95%;   
+ 	margin:1em 20px;
+}
+
+#main tr {
+	background:#000;
+	color:#fff;
+}
+
+#main th {
+	border-bottom:1px solid #fff;
+	font-weight:500;
+}
+
+#main th, #main td {
+	padding-left:5px;
+}
+
+#main td {
+	background:#fff;
+	color:#000;
+}
+
+#main a {
+    background:transparent;
+    color:#000000;
+}
+
+#main a:visited {
+    background:transparent;
+    color:#000;
+}
+
+#main .dag td, #main .dag td a {
+	background:#000; /*fdf44f;*/
+	color:#fff;
+}
+
+#main .uke td, #main .uke td a {
+	background:#000;/*bbaa22;*/
+	color:#fff;
+}
+
+
+#main .common {
+    background:#fff;
+    color:#000000;
+    border:1px solid #000;
+    padding:0em;
+    width:95%;
+	margin:1em 20px;
+}
+
+#main .common strong {
+    padding-left:0.5em;
+}
+
+#main .common ul {
+	list-style:none;
+	margin-left:1em;
+	padding-left:0;
+}
+
+#main h3 {
+	margin-bottom:0;
+	padding-bottom:0;
+	font-size:1em;
+}
+
+#main .score {
+	text-align:right;
+}
+
+#main ul.ranking {
+	list-style:none;
+	margin-left:20px;
+	padding:0;
+}
+
+#main ul.ranking li {
+	display:inline;
+}

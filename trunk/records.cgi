@@ -2,8 +2,8 @@
 #
 # Bjorn Even Wahlstrom "s1393 <at> ii.uib.no.NO.SPAM"
 #
-# $Id: records.cgi,v 1.22 2004/02/29 03:27:53 s1393 Exp $
-
+# $Id$
+# $URL: svn://fribyte.uib.no/nethack-records/branches/0.5-M1/records.cgi $
 use strict;
 use lib './lib';
 use Time::Local;
@@ -18,7 +18,7 @@ my $LOGFILE;
 my $URI;
 my $TEMPLATE;
 my $OPTIONS_FILE = "./options.cfg";
-my $VERSION = "0.5.0-cvs, 30.01.2004";
+my $VERSION = "0.5.0-svn, 05.03.2004";
 my $CREATE_RDF;
 my $RDF_FILE;
 my %OPTIONS;
@@ -31,6 +31,7 @@ my %sex_map;
 my %race_map;
 my %class_man;
 my %class_woman;
+my %dungeon_map;
 
 # dynamic global variables
 my @data;
@@ -70,7 +71,9 @@ if ($sortType eq "today") {
     &commondeath;
 } elsif ($sortType eq "links") {
     &links;
-} elsif ($q->param('name')) {
+} elsif ($sortType eq "char") {
+    &characters();
+}  elsif ($q->param('name')) {
     &personStat(lc($q->param('name')));
 } elsif ($q->param('race')) {
     &stat('race',lc($q->param('race')));
@@ -86,7 +89,7 @@ if ($sortType eq "today") {
     &game($q->param('game'));
 } else {
     # default
-    &lastten;
+    &lastten();
 }
 
 # Generates an RDF-file
@@ -206,6 +209,8 @@ sub parseFile {
             $desc="died of starvation";
         }
 
+        # Map dungeon numbers to actual dungeon names
+        my $deathwhere = $dungeon_map{$temp[2]};
         
         # the rest of the fields lie nicely in the array @temp
 
@@ -231,7 +236,7 @@ sub parseFile {
                         maxhp => $temp[6],
                         deathlvl => $temp[3],
                         maxlvl => $temp[4],
-                        deathwhere => $temp[2]
+                        deathwhere => $deathwhere
         );
 
         push(@data,\%record);   # the hash is stored in @data
@@ -246,11 +251,19 @@ sub parseFile {
     @data=@{&byexp(\@data)};         # sort by experience
 
     my $place = 1;
-
+    my $real_rank = 0;
+    my $previous_score = -1;
+    
     # iterating..
     # each %record is by default located in $_
     for (my $x=0;$x < $#data;$x++) {
-        $data[$x]->{place}=$place++;    # indirect derefencing with -> to access fields
+        
+        if ($previous_score != $data[$x]->{exp}) {
+            $real_rank = $place;
+            $previous_score = $data[$x]->{exp};
+        }
+        $data[$x]->{place}=$real_rank;    # indirect derefencing with -> to access fields
+        $place++;
     }
 
     return \@data;
@@ -304,6 +317,26 @@ sub genRSS {
 
 }
 
+sub characters {
+    $template = HTML::Template->new(filename => "$TEMPLATE/chars.tmpl",%TEMPLATE_OPTIONS);
+
+    my %persons;
+    my @entries;
+    
+# sort out all characters from logfile
+    foreach (@data) {
+        $persons{$_->{name}}="";
+    }
+# save in a template-friendly format
+    foreach (keys %persons) {
+        my %r = ( name => $_ );
+        push(@entries,\%r);
+    }
+    
+    $template->param(entry => \@entries);
+    $template->param(uri => "?sortType=char");
+}
+
 sub links {
     $template = HTML::Template->new(filename => "$TEMPLATE/links.tmpl",%TEMPLATE_OPTIONS);
 }
@@ -316,7 +349,7 @@ sub game {
 
 # find the game
     foreach (@data) {
-        if ($_->{place} eq $place) {
+        if ($_->{place_orig} eq $place) {
             %record = %{$_};
             last;
         }
@@ -407,32 +440,23 @@ sub stat {
 
     foreach (@games) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
         $mon++;
         $year += 1900;
         my $date = "$mday.$mon.$year";
 
         my $color="";
-        if (($today - $record{date}) <= 604800) {
+        if (($today - $record{end_date}) <= 604800) {
             $color="class='uke'";
         }
-        if (($today - $record{date}) <= 86400) {
+        if (($today - $record{end_date}) <= 86400) {
             $color="class='dag'";
         }
 
-        
-        my %entry = (    name =>$record{name},
-                        class => $record{class},
-                        race => $record{race},
-                        alignment => $record{alignment},
-                        sex => $record{sex},
-                        place => $record{place},
-                        desc => $record{desc},
-                        date => $date,
-                        color => $color,
-                        exp => $record{exp} );
-        push(@entries,\%entry);
-        }
+        $record{date}=$date;
+        $record{color}=$color;
+        push(@entries,\%record);
+    }
     $template->param(STAT => \@entries);
 
 }
@@ -573,15 +597,15 @@ sub quickstat {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
         $mon++;
         $year += 1900;
 
-        if (($today - $record{date}) <= 86400) {
+        if (($today - $record{end_date}) <= 86400) {
             $number++;
         }
 
-        if (($today - $record{date}) <= 604800) {
+        if (($today - $record{end_date}) <= 604800) {
             $week_number++;
         }
 
@@ -626,27 +650,17 @@ sub todayList {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
         $mon++;
         $year += 1900;
         my $date = "$mday.$mon.$year";
         my $color="";
 
-        if (($today - $record{date}) <= 86400 && $record{exp} != 0) {
+        if (($today - $record{end_date}) <= 86400 && $record{exp} != 0) {
 
-            my %entry = (    name =>$record{name},
-                            class => $record{class},
-                            race => $record{race},
-                            alignment => $record{alignment},
-                            sex => $record{sex},
-                            desc => $record{desc},
-                            place => $record{place},
-                            date => $date,
-                            color => $color,
-                            exp => $record{exp}
-                        );
-
-            push(@entries,\%entry);
+            $record{date}=$date;
+            $record{color}=$color;
+            push(@entries,\%record);
         }
     }
     $template->param( ENTRY => \@entries);
@@ -665,31 +679,24 @@ sub tenList {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
         $mon++;
         $year += 1900;
         my $date = "$mday.$mon.$year";
 
         my $color="";
-        if (($today - $record{date}) <= 604800) {
+        if (($today - $record{end_date}) <= 604800) {
             $color="class='uke'";
         }
-        if (($today - $record{date}) <= 86400) {
+        if (($today - $record{end_date}) <= 86400) {
             $color="class='dag'";
         }
 
-        my %entry = (    name =>$record{name},
-                        class => $record{class},
-                        race => $record{race},
-                        alignment => $record{alignment},
-                        sex => $record{sex},
-                        place => $record{place},
-                        desc => $record{desc},
-                        date => $date,
-                        color => $color,
-                        exp => $record{exp} );
+        
+        $record{date}=$date;
+        $record{color}=$color;
         $counter++;
-        push(@entries,\%entry);
+        push(@entries,\%record);
         if ($counter > 10) {
             last;
         }
@@ -710,33 +717,28 @@ sub allList {
     my $today = time;
     my @entries;
 
+    
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
         $mon++;
         $year += 1900;
         my $date = "$mday.$mon.$year";
-
+        
         my $color="";
-        if (($today - $record{date}) <= 604800) {
+        if (($today - $record{end_date}) <= 604800) {
             $color="class='uke'";
         }
-        if (($today - $record{date}) <= 86400) {
+        if (($today - $record{end_date}) <= 86400) {
             $color="class='dag'";
         }
-        my %entry = (    name =>$record{name},
-                        class => $record{class},
-                        race => $record{race},
-                        alignment => $record{alignment},
-                        sex => $record{sex},
-                        desc => $record{desc},
-                        place => $record{place},
-                        date => $date,
-                        color => $color,
-                        exp => $record{exp} );
+
+        $record{date}=$date;
+        $record{color}=$color;
+    
         $counter++;
         if ($record{exp} != 0) {
-            push(@entries,\%entry);
+            push(@entries,\%record);
         }
     }
         $template->param( ENTRY => \@entries);
@@ -754,34 +756,22 @@ sub lastten {
 
     for (my $x=0;$x<10;$x++) {
 	my %record=%{$data[$x]};
-	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
 	$mon++;
 	$year += 1900;
 	my $date = "$mday.$mon.$year";
 	
 	my $color="";
-	if (($today - $record{date}) <= 604800) {
+	if (($today - $record{end_date}) <= 604800) {
 	    $color="class='uke'";
 	}
-	if (($today - $record{date}) <= 86400) {
+	if (($today - $record{end_date}) <= 86400) {
 	    $color="class='dag'";
 	}
 	
-        my %entry = (
-                     name =>$record{name},
-                     class => $record{class},
-                     race => $record{race},
-                     alignment => $record{alignment},
-                     sex => $record{sex},
-                     desc => $record{desc},
-                     place => $record{place},
-                     
-                     date => $date,
-                     color => $color,
-                     exp => $record{exp} 
-	);
-	
-	push(@entries,\%entry);
+        $record{date}=$date;
+        $record{color}=$color;
+        push(@entries,\%record);
     }
     
     $template->param( ENTRY => \@entries);
@@ -983,6 +973,15 @@ sub setOptions() {
 # this is actually a bit dirty, but makes life a lot simpler, and the code a lot cleaner
     $TEMPLATE_OPTIONS{'die_on_bad_params'} = 0;
     
+# map dungeon numbers to names
+    %dungeon_map = ( 0 => "The Dungeons of Doom",
+                                1 => "unknown (1)",
+                                2 => "The Gnomish Mines",
+                                4 => "Sokoban",
+                                5 => "unknown (5)",
+                                6 => "unknown (6)",
+                                7 => "unknown (7)" );
+                     
 # map shortnames to fullnames
     %al_map = ( Cha => "Chaotic",
                 Neu => "Neutral",

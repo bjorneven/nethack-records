@@ -28,7 +28,6 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.net.*;
-
 import display.*;
 
 public class AppletPlayer extends Applet{

@@ -2,7 +2,7 @@
  * TerminalHost -- this interface defines the remote end of the connection
  *                 from our Terminal to the Host (virtual).
  * --
- * $Id$
+ * $Id: TerminalHost.java 46 2004-03-06 01:19:11Z bjorn $
  * $timestamp: Wed Mar  5 12:01:31 1997 by Matthias L. Jugel :$
  *
  * This file is part of "The Java Telnet Applet".
@@ -28,7 +28,7 @@ package display;
 /**
  * TerminalHost is an interface for the remote (virtual) end of our connection
  * to the host computer we are connected to.
- * @version $Id$
+ * @version $Id: TerminalHost.java 46 2004-03-06 01:19:11Z bjorn $
  * @author Matthias L Jugel, Marcus Meiﬂner
  */
 public interface TerminalHost

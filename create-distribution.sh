@@ -7,7 +7,7 @@ mkdir -p $BASEDIR/lib/HTML
 mkdir -p $BASEDIR/docs
 mkdir -p $BASEDIR/tmpl
 mkdir -p $BASEDIR/css
-cp -a CREDITS LICENSE CHANGELOG INSTALL README records.cgi *.png $BASEDIR
+cp -a CREDITS LICENSE CHANGELOG INSTALL README index.cgi *.png $BASEDIR
 cp -a css/*.css $BASEDIR/css
 cp -a lib/HTML/Template.pm lib/HTML/ARTISTIC lib/HTML/GPL lib/HTML/ANNOUNCE lib/HTML/FAQ lib/HTML/README $BASEDIR/lib/HTML
 cp -a lib/optionsParser.pm $BASEDIR/lib

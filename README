@@ -1,0 +1,14 @@
+Nethack-Records
+---------------
+
+Version 0.4.3
+
+HTML::Template.pm is included with this code, read HTML/GPL, HTML/ARTISTIC and HTML/README for more information
+about the template engine.
+
+Nethack-Records is distributed under the GPL (see LICENSE)
+
+See CREDITS for more information about the contributors, and docs/Development-Plan.txt for what
+to expect in the future for Nethack-Records.
+
+Be seeing you...

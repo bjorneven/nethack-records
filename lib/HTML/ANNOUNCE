@@ -1,0 +1,66 @@
+ANNOUNCEMENT: HTML::Template 2.6
+
+HTML::Template - a Perl module to use HTML Templates
+
+CHANGES
+
+2.6
+
+- New Feature: HTML::Template will combine HTML_TEMPLATE_ROOT
+               environment variable and path option if both are
+               available. (Jesse Erlbaum)
+
+- New Feature: __counter__ variable now available when
+              loop_context_vars is set (Simran Gambhir)
+
+- New Feature: The default attribute allows you to specify
+               defaults for <tmpl_var> tags.
+
+- Bug Fix: fixed parser to reject <tmpl_var>s with no names.
+           (crazyinsomniac)
+
+- Doc Fix: fixed documentation to correctly describe the
+           interaction of case_sensitive and loop_context_vars.
+           (Peter Claus Lamprecht)
+
+- Doc Fix: updated mailing-list information to reflect move from
+           vm.com to sourceforge.net
+
+DESCRIPTION
+
+    This module attempts to make using HTML templates simple and natural. It
+    extends standard HTML with a few new HTML-esque tags - <TMPL_VAR>,
+    <TMPL_LOOP>, <TMPL_INCLUDE>, <TMPL_IF>, <TMPL_ELSE> and <TMPL_UNLESS>.
+    The file written with HTML and these new tags is called a template. It
+    is usually saved separate from your script - possibly even created by
+    someone else! Using this module you fill in the values for the
+    variables, loops and branches declared in the template. This allows you
+    to separate design - the HTML - from the data, which you generate in the
+    Perl script.
+
+    This module is licensed under the GPL. See the LICENSE section below for
+    more details.
+
+TUTORIAL
+
+    If you're new to HTML::Template, I suggest you start with the
+    introductory article available on the HTML::Template website:
+
+       http://html-template.sourceforge.net
+
+AVAILABILITY
+
+    This module is available on SourceForge.  Download it at:
+
+       http://html-template.sourceforge.net
+
+    The module is also available on CPAN.  You can get it using
+    CPAN.pm or go to:
+
+       http://www.cpan.org/authors/id/S/SA/SAMTREGAR/
+
+CONTACT INFO
+
+    This module was written by Sam Tregar (sam@tregar.com). You can join the 
+    HTML::Template mailing-list by sending a blank message to
+    htmltmpl-subscribe@lists.vm.com.

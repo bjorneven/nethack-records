@@ -1,0 +1,98 @@
+Development plans for Nethack Records
+--------------------------------------
+
+ written by Bjørn Even Wahlstrøm, 2003.
+
+This file describes the future plans for Nethack-Records
+(nethack-records.sf.net). It is meant for the developers,
+and end-users wanting to know what lies ahead. If you
+have comments or suggestions regarding this paper 
+(or Nethack-Records), mail me at s1393@ii.uib.no
+
+
+
+
+
+
+Milestones for this project is set at version 0.5 and version 1.0.
+They should be feature complete, tested and be easy to install 
+for the end-user.
+
+Milestone 1 (version 0.5) is due before Christmas 2003, and 
+milestone 2 (1.0) is due late February 2004.
+
+
+* Development plan for milestone 1
+----------------------------------
+
+Version 0.4.4:
+ - Good language and menus should be easy to understand and browse.
+ - Includes options for template, logfile and hostname, they are set
+   with variables in the script itself.
+ - Include RDF-file generation, and the RDF-filename should be configured
+   by a variable
+ - View last five games and rank by best average score
+
+Version 0.4.5:
+ - Uses a cache mechanism to store temporary pages, to lessen burden on host
+ - User-configurable options _file_.
+ 
+Version 0.5 (milestone, and cvs branch):
+ - View several statistics on a per game basis. Statistics should be, but not limited to:
+    + Dungeon character died on
+    + Experience, cause of death and so on
+    + Move count
+    + Max HP, HP when dead
+ - Show number of players played that day on quickstat (added 30.1.2004)
+
+Version 0.5.x: 
+This will only be bugfixes or minor adjustments, and will problably
+be visible in branch for milestones 1 and 2.
+
+* Development plan for milestone 2
+----------------------------------
+These are a bit sketchy, and therefore the release numbering may seem a bit 
+"over the top". Note that there will probably be more subreleases between major (0.x) releases,
+but they may or may not appear here. The major releases outlines the main plans nonetheless.
+
+
+Version 0.6:
+ - Have means to authenticate a person against a player database
+ - Have means to maintain a player database
+ - Have understanding of an admin (ability to maintain player database), and a person (no privileges
+   other than to update own material)
+
+Version 0.6.x:
+ - Minor feature enhancements discovered at implementation of features in 0.6.
+
+Version 0.7:
+ - Can link several characters to a person registered as a user in the system. The administrator user must
+   approve such a request. The administrator should be notified via mail.
+ - Should have means of displaying all characters belonging to a person, and sort by various criterias
+   (such as experience, cause of death, gender and so on).
+
+Version 0.7.x:
+ - Minor feature enhancements discovered at implementation of features in 0.7.
+
+Version 0.8:
+ - Comment-system. A registered person should be able to comment on his/her own games.
+   
+Version 0.8.1:
+ - Display _person_ statistics
+ - Person vs person ranking, should display average score, first and last game etc.
+ - Minor feature enhancements discovered at implementation of features in 0.8.
+
+Version 0.9:
+ - End-users should be able to watch other persons games, via a play-back feature of
+   recorded games. Implemented via a java applet.
+ - Persons should be able to block games from playback at their own discretion.
+   
+Version 0.9.x:
+ - Feature freeze
+ - Only bugfixes and crucial enhancements relating to the direct usability of the product.
+   
+Version 1.0 (milestone, and cvs branch):
+ - Bugfixes from 0.9, no major features other than those stated above will be present here.
+
+Version 1.x: 
+ - No plans as of today

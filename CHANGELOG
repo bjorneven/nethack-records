@@ -1,0 +1,23 @@
+# Bjorn Even Wahlstrom "s1393 <at> ii.uib.no.NO.SPAM"
+# 
+# version 0.1   18.11.2003 initial hack
+# version 0.2   19.11.2003 less hack, more templates. 
+# version 0.3   20.11.2003 xhtml strict compliance, nicer code
+# version 0.4   22.11.2003 more annotation, better structure. initial public release
+# version 0.4.1 22.11.2003 Added links-page and common death links. 
+#                          Added version numbering in header
+#                          Today scores are not colored
+# version 0.4.2 25.11.2003 Added quickstat to show number of ppl dead pr day.
+#                          Re-formatted this file thanks to Nils 
+#               26.11.2003 Added more quickstatistics
+#               
+#	            29.11.2003 Functionality to generate RDF-files included
+# version 0.4.3 27.11.2003 Translation from norwegian to english
+#               28.11.2003 Fixed bug relating to sorting. Choosing 'Male' no longer includes 'Female'.. :)
+#		        29.11.2003 Fixed some Language problems.
+#		        29.11.2003 Functionality to generate RDF-files included
+#		        30.11.2003 Some minor HTML bug fix
+#               01.12.2003 Some logfile death-translation for version nr 3.4.1 ->3.4.2
+# version 0.4.4	20.12.2003 Sort by last five games
+#               08.01.2004 Parser for options-file
+#               09.01.2004 Fixed bug in link to validator

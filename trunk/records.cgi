@@ -18,7 +18,7 @@ my $LOGFILE;
 my $URI;
 my $TEMPLATE;
 my $OPTIONS_FILE = "./options.cfg";
-my $VERSION = "0.5.0-svn, 22.03.2004";
+my $VERSION = "0.5.0, 08.09.2004";
 my $CREATE_RDF;
 my $RDF_FILE;
 my %OPTIONS;
@@ -281,7 +281,7 @@ sub genRSS {
 
     print FILE "\t<channel>\n";
     print FILE "\t\t<title>Nethack daily statistics</title>\n";
-    print FILE "\t\t<link>http://www.lstud.ii.uib.no/~s1393/Nethack-Records/records.cgi</link>\n";
+    print FILE "\t\t<link>$URI</link>\n";
     print FILE "\t</channel>\n";
     my $today = time;
     foreach (@data) {

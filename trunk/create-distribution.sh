@@ -1,17 +1,20 @@
-#!/bin/sh
-rm -r dist/Nethack-Records
-mkdir -p dist/Nethack-Records/lib/HTML
-mkdir -p dist/Nethack-Records/docs
-mkdir -p dist/Nethack-Records/tmpl
-cp -a CREDITS LICENSE CHANGELOG INSTALL README nethack.css records.cgi *.png dist/Nethack-Records
-cp -a lib/HTML/Template.pm lib/HTML/ARTISTIC lib/HTML/GPL lib/HTML/ANNOUNCE lib/HTML/FAQ lib/HTML/README dist/Nethack-Records/lib/HTML
-cp -a lib/optionsParser.pm dist/Nethack-Records/lib
-cp -a docs/* dist/Nethack-Records/docs
-#cp -a tmpl/* dist/Nethack-Records/tmpl
-cp -a *.tmpl dist/Nethack-Records/
-cp -a options.cfg dist/Nethack-Records/
+#!/bin/bash
+DATE=`date -I`
+VERSION=0.5-$DATE
+BASEDIR=dist/Nethack-Records-$VERSION
+
+mkdir -p $BASEDIR/lib/HTML
+mkdir -p $BASEDIR/docs
+mkdir -p $BASEDIR/tmpl
+cp -a CREDITS LICENSE CHANGELOG INSTALL README nethack.css records.cgi *.png $BASEDIR
+cp -a lib/HTML/Template.pm lib/HTML/ARTISTIC lib/HTML/GPL lib/HTML/ANNOUNCE lib/HTML/FAQ lib/HTML/README $BASEDIR/lib/HTML
+cp -a lib/optionsParser.pm $BASEDIR/lib
+cp -a docs/* $BASEDIR//docs
+cp -a tmpl/* $BASEDIR/tmpl
+#cp -a *.tmpl dist/Nethack-Records/
+cp -a options.cfg $BASEDIR/
 cd dist
-tar cvzf ../Nethack-Records.tar.gz Nethack-Records
+tar czf ../Nethack-Records-$VERSION.tar.gz Nethack-Records-$VERSION
 cd ..
-
-
+rm -r $BASEDIR
+echo "Distribution created in Nethack-Records-$VERSION.tar.gz"

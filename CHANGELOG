@@ -21,3 +21,7 @@
 # version 0.4.4	20.12.2003 Sort by last five games
 #               08.01.2004 Parser for options-file
 #               09.01.2004 Fixed bug in link to validator
+# version 0.4.5 30.01.2004 0.4.5 Released
+#		22.02.2004 View statistics pr game
+# 		01.03.2004 Last five is now last ten
+#		03.03.2004 New design

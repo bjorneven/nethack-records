@@ -79,7 +79,7 @@ if ($sortType eq "today") {
 } elsif ($q->param('sex')) {
     &stat('sex',lc($q->param('sex')));
 } elsif ($q->param('desc')) {
-    &stat('desc',lc($q->param('desc')));
+    &stat('death',lc($q->param('desc')));
 } elsif ($q->param('alignment')) {
     &stat('alignment',lc($q->param('alignment')));
 } elsif ($q->param('game')) {

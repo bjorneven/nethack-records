@@ -1,16 +1,20 @@
 <TMPL_INCLUDE NAME="header.tmpl">
-<h1>Nethack Ranklist</h1>
-Rank by:
-<a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=exp">Score</a>
-<a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=median">Median</a>
-<a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=average">Average</a>
+<h2>Nethack Ranklist</h2>
+
+<ul>
+	<li>Rank by:</li>
+	<li><a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=exp">Score</a></li>
+	<li><a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=median">Median</a></li>
+	<li><a href="<TMPL_VAR NAME=hostname>?sortType=ranking&rank=average">Average</a></li>
+</ul>
 
 <h3>Ranking by average</h3>
+
 <table>
 <tr>
-    <td>Rank:</td>
-    <td>Average:</td>
-    <td>Name:</td>
+    <th>Rank:</th>
+    <th>Average:</th>
+    <th>Name:</th>
 </tr>
 
 

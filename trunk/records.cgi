@@ -980,7 +980,7 @@ sub setOptions() {
                                 4 => "Sokoban",
                                 5 => "unknown (5)",
                                 6 => "unknown (6)",
-                                7 => "unknown (7)" );
+                                7 => "the Astral Planes." );
                      
 # map shortnames to fullnames
     %al_map = ( Cha => "Chaotic",

@@ -109,14 +109,10 @@ a {
  	margin:1em 20px;
 }
 
-#main tr {
-	background:#000;
-	color:#fff;
-}
-
 #main th {
 	border-bottom:1px solid #fff;
 	font-weight:500;
+	text-align:left;
 }
 
 #main th, #main td {
@@ -167,6 +163,13 @@ a {
 	margin-left:1em;
 	padding-left:0;
 }
+
+#main .common ul li:before {
+	content:"@";
+	padding-right:5px;
+	font-family:monospace;
+}
+	
 
 #main h3 {
 	margin-bottom:0;

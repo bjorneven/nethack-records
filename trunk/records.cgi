@@ -64,8 +64,8 @@ if ($sortType eq "today") {
     &tenList;
 } elsif ($sortType eq "all") {
     &allList;
-} elsif ($sortType eq "lastfive") {
-    &lastfive;
+} elsif ($sortType eq "lastten") {
+    &lastten;
 } elsif ($sortType eq "commondeath") {
     &commondeath;
 } elsif ($sortType eq "links") {
@@ -86,7 +86,7 @@ if ($sortType eq "today") {
     &game($q->param('game'));
 } else {
     # default
-    &lastfive;
+    &lastten;
 }
 
 # Generates an RDF-file
@@ -744,15 +744,15 @@ sub allList {
 
 
 
-sub lastfive {
-    $template = HTML::Template->new(filename => "$TEMPLATE/lastfive.tmpl",%TEMPLATE_OPTIONS);
-    $template->param(uri => "?sortType=lastfive");
+sub lastten {
+    $template = HTML::Template->new(filename => "$TEMPLATE/lastten.tmpl",%TEMPLATE_OPTIONS);
+    $template->param(uri => "?sortType=lastten");
 
     @data=@{&byorig(\@data)};
     my @entries;
     my $today = time;
 
-    for (my $x=0;$x<5;$x++) {
+    for (my $x=0;$x<10;$x++) {
 	my %record=%{$data[$x]};
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
 	$mon++;

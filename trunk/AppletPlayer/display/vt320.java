@@ -75,7 +75,7 @@ import java.applet.Applet;
  *      cannot be less than the amount of rows on the display. It determines
  *      the available scrollback buffer.
  *  <DT><TT>&lt;PARAM NAME="VTcharset" VALUE="<I>none</I>"&gt</TT>
- *  <DD>Setting this parameter to <B>ibm</B> will enable mapping of ibm
+*  <DD>Setting this parameter to <B>ibm</B> will enable mapping of ibm
  *      characters (as used in PC BBS systems) to UNICODE characters. Note
  *      that those special characters probably won't show on UNIX systems
  *      due to lack in X11 UNICODE support.
@@ -805,7 +805,7 @@ public class vt320 extends Terminal implements TerminalHost
    * @see display.TerminalHost
    */
   public boolean send(String s) {
-    putString(s);
+      //    putString(s);
     return true;
   }
 

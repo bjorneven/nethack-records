@@ -1,6 +1,6 @@
 #!/usr/bin/perl -I.
 #
-# Bjorn Even Wahlstrom "s1393 <at> ii.uib.no.NO.SPAM"
+# Bjorn Even Wahlstrom "bjorn at wahlstroem dot org"
 #
 # $Id: records.cgi 47 2004-03-06 01:21:28Z bjorn $
 # $URL$

@@ -9,24 +9,30 @@
     <link href='nethack.css' rel='stylesheet' type='text/css' />
 </head>
 <body>
-<div id="top">
 
-<a href="http://validator.w3.org/check?uri=<TMPL_VAR NAME="hostname"><TMPL_VAR NAME="uri">"><img src="valid-xhtml10.png" alt="Valid xhtml" title="Hah, this site is valid xhtml strict 1.0" /></a>
+<div id="header">
 
-    <h1>Nethack - A dynamic survey</h1>
+	<a href="http://validator.w3.org/check?uri=<TMPL_VAR NAME="hostname"><TMPL_VAR NAME="uri">"><img src="valid-xhtml10.png" alt="Valid xhtml" title="Hah, this site is valid xhtml strict 1.0" /></a>	
+
+    <h1><span>Nethack</span>- A dynamic survey</h1>
+
     <p class="version">Version <TMPL_VAR NAME="version"></p>
     <p>Quick-stat: <TMPL_VAR NAME="quickstat"></p>
-    <dl>
-        <dt>Sort by:</dt>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=today'>Todays list</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=topten'>Top 10</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=all'>Full list</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=lastten'>Last ten</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=commondeath'>Causes</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=ranking'>Ranking</a>]</dd>
-        <dd>[<a href='<TMPL_VAR NAME=hostname>?sortType=links'>Links</a>]</dd>
-    </dl>
 
 </div>
 
+<div id="navigation">
+    <ul>
+        <li>Sort by -&nbsp;</li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=today'>Todays list</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=topten'>Top 10</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=all'>Full list</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=lastten'>Last ten</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=commondeath'>Causes</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=ranking'>Ranking</a></li>
+        <li><a href='<TMPL_VAR NAME=hostname>?sortType=links'>Links</a></li>
+    </ul>
+	<br style="clear:both;" />
+</div>
 
+<div id="main">

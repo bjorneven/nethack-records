@@ -1,8 +1,11 @@
 <TMPL_INCLUDE NAME="header.tmpl">
 <h2>Listing of characters</h2>
 
-<TMPL_LOOP NAME=ENTRY>
-<TMPL_VAR NAME="NAME"><br />
-</TMPL_LOOP>
-
+<div class="common">
+	<ul>
+		<TMPL_LOOP NAME=ENTRY>
+		<li><TMPL_VAR NAME="NAME"></li>
+		</TMPL_LOOP>
+	</ul>
+</div>
 <TMPL_INCLUDE NAME="footer.tmpl">

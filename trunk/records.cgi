@@ -2,7 +2,7 @@
 #
 # Bjorn Even Wahlstrom "s1393 <at> ii.uib.no.NO.SPAM"
 #
-# $Id$
+# $Id: records.cgi 47 2004-03-06 01:21:28Z bjorn $
 # $URL$
 use strict;
 use lib './lib';

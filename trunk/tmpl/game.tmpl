@@ -1,0 +1,15 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<TMPL_LOOP NAME=ENTRY>
+
+<h1><TMPL_VAR NAME=NAME>'s game</h1>
+<div>
+Died in <TMPL_VAR NAME=DEATHWHERE>, by cause "<TMPL_VAR NAME=DESC>"<BR />
+Game rank: <TMPL_VAR NAME=PLACE>, Character name: <TMPL_VAR NAME=NAME><BR />
+Game started: <TMPL_VAR NAME=DATE>, ended: <TMPL_VAR NAME=END_DATE>, Points: <TMPL_VAR NAME=EXP><BR />
+Max hp: <TMPL_VAR NAME=MAXHP>, when dead: <TMPL_VAR NAME=HP><BR />
+Dead at level: <TMPL_VAR NAME=DEATHLVL>, maximum level: <TMPL_VAR NAME=MAXLVL><BR />
+</div>
+</TMPL_LOOP>
+
+
+<TMPL_INCLUDE NAME="footer.tmpl">

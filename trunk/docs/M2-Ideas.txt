@@ -1,0 +1,5 @@
+Ideas for upcoming M2 branch
+----------------------------
+ - view stats for savegames
+ - a server-side daemon
+

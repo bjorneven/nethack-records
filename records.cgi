@@ -78,7 +78,7 @@ if ($sortType eq "today") {
 } elsif ($q->param('race')) {
     &stat('race',lc($q->param('race')));
 } elsif ($q->param('class')) {
-    &stat('class',$q->param('class'));
+    &stat('class',lc($q->param('class')));
 } elsif ($q->param('sex')) {
     &stat('sex',lc($q->param('sex')));
 } elsif ($q->param('death')) {
@@ -628,7 +628,7 @@ sub quickstat {
                     week_number => $week_number,
                     male_percent => $male_percent,
                     female_percent => $female_percent,
-                    total => $#data,
+                    total => $#data+1,
                     distinct_number => $number_distinct
                     );
     return \%stat;

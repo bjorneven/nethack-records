@@ -1,13 +1,18 @@
 <TMPL_INCLUDE NAME="header.tmpl">
 <TMPL_LOOP NAME=ENTRY>
 
-<h1><TMPL_VAR NAME=NAME>'s game</h1>
-<div>
-Died in <TMPL_VAR NAME=DEATHWHERE>, by cause "<TMPL_VAR NAME=DESC>"<BR />
-Game rank: <TMPL_VAR NAME=PLACE>, Character name: <TMPL_VAR NAME=NAME><BR />
-Game started: <TMPL_VAR NAME=DATE>, ended: <TMPL_VAR NAME=END_DATE>, Points: <TMPL_VAR NAME=EXP><BR />
-Max hp: <TMPL_VAR NAME=MAXHP>, when dead: <TMPL_VAR NAME=HP><BR />
-Dead at level: <TMPL_VAR NAME=DEATHLVL>, maximum level: <TMPL_VAR NAME=MAXLVL><BR />
+<h2><TMPL_VAR NAME=NAME>'s game</h2>
+<div class="common">
+<ul>
+
+	<li>Character name: <TMPL_VAR NAME=NAME></li>
+	<li>Points: <TMPL_VAR NAME=EXP></li>
+	<li>Game rank: <TMPL_VAR NAME=PLACE></li>
+	<li>Max hp: <TMPL_VAR NAME=MAXHP>, when dead: <TMPL_VAR NAME=HP></li>
+	<li>Died in <TMPL_VAR NAME=DEATHWHERE>, by cause "<TMPL_VAR NAME=DESC>"</li>
+	<li>Dead at level: <TMPL_VAR NAME=DEATHLVL>, maximum level: <TMPL_VAR NAME=MAXLVL></li>
+	<li>Game started: <TMPL_VAR NAME=DATE>, ended: <TMPL_VAR NAME=END_DATE></li>
+</ul>
 </div>
 </TMPL_LOOP>
 

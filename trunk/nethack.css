@@ -117,7 +117,6 @@ a {
 #main th {
 	border-bottom:1px solid #000;
 	font-weight:500;
-	text-align:left;
 }
 
 #main th, #main td {
@@ -161,6 +160,12 @@ a {
 
 #main .common strong {
     padding-left:0.5em;
+}
+
+#main .common ul {
+	list-style:none;
+	margin-left:1em;
+	padding-left:0;
 }
 
 #main h3 {

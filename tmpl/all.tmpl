@@ -10,12 +10,12 @@
     <th>Alignment:</th>
     <th>Gender:</th>
     <th>Death:</th>
-    <th>Date:</th>
+    <th>End date:</th>
 </tr>
 
 <TMPL_LOOP NAME=ENTRY>
 <tr <TMPL_VAR NAME=COLOR>>
-    <td><a href="<TMPL_VAR NAME=hostname>?game=<TMPL_VAR NAME=PLACE>"><TMPL_VAR NAME=PLACE></a></td>
+    <td><a href="<TMPL_VAR NAME=hostname>?game=<TMPL_VAR NAME=PLACE_ORIG>"><TMPL_VAR NAME=PLACE></a></td>
     <td class="score"><TMPL_VAR NAME=exp></td>
     <td><a href="<TMPL_VAR NAME=hostname>?name=<TMPL_VAR NAME=NAME>"><TMPL_VAR NAME=NAME></a></td>
     <td><a href="<TMPL_VAR NAME=hostname>?class=<TMPL_VAR NAME=CLASS>"><TMPL_VAR NAME=CLASS></a></td>

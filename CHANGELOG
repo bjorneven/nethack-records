@@ -11,12 +11,12 @@
 #                          Re-formatted this file thanks to Nils 
 #               26.11.2003 Added more quickstatistics
 #               
-#	            29.11.2003 Functionality to generate RDF-files included
+#	        29.11.2003 Functionality to generate RDF-files included
 # version 0.4.3 27.11.2003 Translation from norwegian to english
 #               28.11.2003 Fixed bug relating to sorting. Choosing 'Male' no longer includes 'Female'.. :)
-#		        29.11.2003 Fixed some Language problems.
-#		        29.11.2003 Functionality to generate RDF-files included
-#		        30.11.2003 Some minor HTML bug fix
+#		29.11.2003 Fixed some Language problems.
+#		29.11.2003 Functionality to generate RDF-files included
+#		30.11.2003 Some minor HTML bug fix
 #               01.12.2003 Some logfile death-translation for version nr 3.4.1 ->3.4.2
 # version 0.4.4	20.12.2003 Sort by last five games
 #               08.01.2004 Parser for options-file
@@ -27,4 +27,11 @@
 #		03.03.2004 New design
 #		06.03.2004 Equal score means equals rank
 #			   Character link added showing all characters
-#		08.09.2004 0.5.0 Released
+# version 0.5.0	08.09.2004 0.5.0 Released
+#	        05.06.2007 Added quit and date-patches by Casey Zacek
+#		05.06.2007 Fixed bug with empty logfile
+#		05.06.2007 Added alternative css-file
+#		05.06.2007 Added contact-person to options-file
+
+
+#		

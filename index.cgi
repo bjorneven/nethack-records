@@ -1,12 +1,15 @@
 #!/usr/bin/perl -I.
 #
 # Bjorn Even Wahlstrom "bjorn at wahlstroem dot org"
-#
+# 
+# Contributions by
+# Casey Zacek "bogleg at bogleg dot org"
+
 # $Id: records.cgi 47 2004-03-06 01:21:28Z bjorn $
 # $URL$
 use strict;
 use lib './lib';
-use Time::Local;
+use POSIX qw(strftime mktime);
 use CGI;
 use HTML::Template;
 use optionsParser;
@@ -18,11 +21,14 @@ my $LOGFILE;
 my $URI;
 my $TEMPLATE;
 my $OPTIONS_FILE = "./options.cfg";
-my $VERSION = "0.5.0, 08.09.2004";
+my $VERSION = "0.5.1-beta, 05.06.2007";
 my $CREATE_RDF;
 my $RDF_FILE;
 my %OPTIONS;
 my %TEMPLATE_OPTIONS;
+my $DATE_FORMAT;
+my $IGNORE_QUIT;
+my $CONTACT_NAME;
 
 # nethack stores various statistics in abbreviated form
 # these maps abbreviated to full form
@@ -46,6 +52,9 @@ my $sortType;
 # parse nethack logfile, and store sorted by experience
 @data = @{&parseFile($LOGFILE)};
 
+if ($#data==-1) {
+	die("Empty logfile $LOGFILE!");
+}
 
 # this param is just for testing.. e.g. records.cgi?sortType=topten&bydate=true..
 if ($q->param('bydate')) {
@@ -101,6 +110,7 @@ if ($CREATE_RDF) {
 my %quickstat = %{&quickstat};
 $template->param( version => $VERSION);
 $template->param( hostname => $URI);
+$template->param( contact_name => $CONTACT_NAME);
 
 my $r = int(rand(6));
 my $qstat;
@@ -133,6 +143,10 @@ print $template->output;
 # functions follows
 #
 
+sub mkdate {
+    return strftime($DATE_FORMAT,localtime(shift()));
+}
+
 # sort @data by experience
 sub byexp {
     my @data=@{$_[0]};
@@ -159,9 +173,7 @@ sub parseFile {
     my $file = $_[0]; # logfile to parse
 
     open(FILE,$file) or die("Could not load logfile: $!");
-    my @records = <FILE>;
-    close(FILE);
-
+    
     my @data;
     my $line_nr = 0;
 
@@ -169,7 +181,7 @@ sub parseFile {
     #format:
     # version points deathwhere deathlev maxlvl hp maxhp deathdnum enddate
     # startdate usernum class race gender alignment name,death
-    foreach (@records) {
+    while (<FILE>) {
         chop;
 
         # separate all fields into @temp. This works for all fields except death, which is taken care of below
@@ -180,6 +192,10 @@ sub parseFile {
         m/$al\s(.+?),(.+)/;
         my $name = $1;              # use it as anchorpoint to find name
         my $desc = $2;              # and death
+		$desc =~ s/ \{exp\}$//; # death-explore patch
+		my $moves = 0; # logmoves patch
+		$desc =~ s/ \{(\d+)\}$// and $moves = $1; # logmoves patch
+		next if $desc eq 'quit' && $IGNORE_QUIT; # ignore quitters?
         my $start_date = $temp[9];
         my $end_date = $temp[8];
         $start_date =~ m/(\d{4})(\d{2})(\d{2})/;   # year,month,day..
@@ -187,13 +203,13 @@ sub parseFile {
         my $start_year = $1 - 1900;       # perl date convert has the form YY not YYYY
         my $start_month = $2-1;           # and months are from 0..11
         my $start_day = $3;
-        $start_date = timelocal(0,0,0,$start_day,$start_month,$start_year);     # convert to seconds
+        $start_date = mktime(0,0,0,$start_day,$start_month,$start_year);     # convert to seconds
         
         $end_date =~ m/(\d{4})(\d{2})(\d{2})/;   # year,month,day..
         my $end_year = $1 - 1900;       # perl date convert has the form YY not YYYY
         my $end_month = $2-1;           # and months are from 0..11
         my $end_day = $3;
-        $end_date = timelocal(0,0,0,$end_day,$end_month,$end_year);     # convert to seconds
+        $end_date = mktime(0,0,0,$end_day,$end_month,$end_year);     # convert to seconds
                     
         # convert some classes to reflect their sex, e.g. priest->priestess if woman
         my  $class;
@@ -241,6 +257,7 @@ sub parseFile {
 
         push(@data,\%record);   # the hash is stored in @data
     }
+	close FILE;
 
 
     # we are now done saving.
@@ -286,10 +303,7 @@ sub genRSS {
     my $today = time;
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($record{date});
         my $color="";
 
         if (($today - $record{date}) <= 86400) {
@@ -354,14 +368,8 @@ sub game {
             last;
         }
     }
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{date});
-    $mon++;
-    $year += 1900;
-    my $start_date = "$mday.$mon.$year";
-    ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-    $mon++;
-    $year += 1900;
-    my $end_date = "$mday.$mon.$year";
+    my $start_date = mkdate($record{date});
+    my $end_date = mkdate($record{end_date});
     
     $record{date} = $start_date;
     $record{end_date} = $end_date;
@@ -439,10 +447,7 @@ sub stat {
 
     foreach (@games) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($record{end_date});
 
         my $color="";
         if (($today - $record{end_date}) <= 604800) {
@@ -515,10 +520,7 @@ sub personStat {
 
 
     foreach (0..3) {
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($entries[$_]->{date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($entries[$_]->{date});
         my $color="";
         my $today=time;
         if (($today - $entries[$_]->{date}) <= 604800) {
@@ -593,9 +595,6 @@ sub quickstat {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-        $mon++;
-        $year += 1900;
 
         if (($today - $record{end_date}) <= 86400) {
             $number++;
@@ -646,10 +645,7 @@ sub todayList {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($record{date});
         my $color="";
 
         if (($today - $record{end_date}) <= 86400 && $record{exp} != 0) {
@@ -675,10 +671,7 @@ sub tenList {
 
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($record{end_date});
 
         my $color="";
         if (($today - $record{end_date}) <= 604800) {
@@ -716,10 +709,7 @@ sub allList {
     
     foreach (@data) {
         my %record=%{$_};
-        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-        $mon++;
-        $year += 1900;
-        my $date = "$mday.$mon.$year";
+        my $date = mkdate($record{end_date});
         
         my $color="";
         if (($today - $record{end_date}) <= 604800) {
@@ -752,10 +742,7 @@ sub lastten {
 
     for (my $x=0;$x<10;$x++) {
 	my %record=%{$data[$x]};
-	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($record{end_date});
-	$mon++;
-	$year += 1900;
-	my $date = "$mday.$mon.$year";
+    my $date = mkdate($record{end_date});
 	
 	my $color="";
 	if (($today - $record{end_date}) <= 604800) {
@@ -933,7 +920,7 @@ sub setOptions() {
         $filename =~ s/\?.+$//;      # might also be ?blablbl=asdasd attributes in PUT request
         
         if (!defined($URI)) {
-            $URI="http://www.lstud.ii.uib.no/~s1393/Nethack-Records/$filename";
+            $URI="http://example.url/$filename";
         } else {
             $URI = "$URI"."$filename";
         }
@@ -952,11 +939,30 @@ sub setOptions() {
     if (!defined($CREATE_RDF)) {
         $CREATE_RDF = 1;
     }
+
+# Specify contact-person for this service
+   $CONTACT_NAME=$OPTIONS{'contact_name'};
+   if (!$CONTACT_NAME) {
+   	$CONTACT_NAME="NONE";
+   } 
+
 # Specify RDF-file to create. Contains todays-games. Only
 # applicable if CREATE_RDF is true
     $RDF_FILE = $OPTIONS{'rdf_file'};
     if (!defined($RDF_FILE)) {
         $RDF_FILE = "./today.rdf";
+    }
+
+# Pick a date format (for POSIX::strftime())
+    $DATE_FORMAT = $OPTIONS{'date_format'};
+    if(!defined($DATE_FORMAT)) {
+        $DATE_FORMAT = '%d.%m.%Y';
+    }
+    
+# ignore #quitters?
+    $IGNORE_QUIT = $OPTIONS{'ignore_quit'};
+    if(!defined($IGNORE_QUIT)) {
+        $IGNORE_QUIT = 0;
     }
     
 # Specify shared cache on or off
@@ -965,7 +971,7 @@ sub setOptions() {
     } else {
         $TEMPLATE_OPTIONS{'shared_cache'} = $OPTIONS{'shared_cache'};
     }
-    
+   
 # this is actually a bit dirty, but makes life a lot simpler, and the code a lot cleaner
     $TEMPLATE_OPTIONS{'die_on_bad_params'} = 0;
     

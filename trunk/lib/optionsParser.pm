@@ -39,16 +39,21 @@ sub readOptions() {
 
 sub nextToken() {
     my $l = $file[$line]; # read the next line 
-	while ($l !~ /\s*(.+?)\s*\=\s*\"(.+?)\"\s*;/) {
+	while ($l !~ /\s*(.+?)\s*\=\s*\"(.+?)\"\;/s) {
 		$l = $file[++$line];
 		if (!&hasMoreTokens()) {
 			return ("","",$line);
 		}
 	}
 	
-	$l =~ /\s*(.+?)\s*\=\s*\"(.+?)\"\s*;/;
+	$l =~ /\s*(.+?)\s*\=\s*\"(.+?)\"\;/s;
+	my $var = $1;
+	my $value = $2;
+	$value =~ s/\</\&lt\;/g;
+	$value =~ s/\>/\&gt\;/g;
+
 	$line++;
-        return ($1,$2,$line);
+        return ($var,$value,$line);
 }
 
 sub hasMoreTokens() {

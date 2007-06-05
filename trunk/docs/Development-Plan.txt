@@ -19,7 +19,7 @@ They should be feature complete, tested and be easy to install
 for the end-user.
 
 milestone 1 (0.5) was reached 09.08.2004
-milestone 2 (1.0) is due late June 2004.
+milestone 2 (1.0) is due when I feel like it.
 
 * Development plan for milestone 1
 ----------------------------------

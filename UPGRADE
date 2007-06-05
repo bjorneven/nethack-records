@@ -1,0 +1,13 @@
+Upgrading from 0.5.0 to 0.5.1
+------------------------------
+
+* Make a backup of your original options.cfg file, and possibly the 
+  logfile if it is kept in the same folder.
+* Unpack the new 0.5.1 installation over the old installation, 
+  or make a new directory.
+* There is a small change to the options.cfg file, but otherwise
+  all your options from the original options file is compatible 
+  with the new. You have to merge your old options into the new one
+  manually.
+
+

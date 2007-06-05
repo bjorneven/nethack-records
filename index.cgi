@@ -1,7 +1,8 @@
 #!/usr/bin/perl -TwI.
 #
 # Bjorn Even Wahlstrom "bjorn at wahlstroem dot org"
-# 
+# Read LICENSE for distribution rights
+#
 # Contributions by
 # Casey Zacek "bogleg at bogleg dot org"
 
@@ -16,11 +17,28 @@ use optionsParser;
 use CGI::Carp qw(fatalsToBrowser);
 
 
+# EDIT THIS TO SPECIFY YOUR NEEDS. E.g /etc/nhrecords/options.cfg. MAKE SURE IT IS READABLE 
+# BY THE WEBSERVER
+my $OPTIONS_FILE = "./options.cfg";
+
+
+
+
+
+
+# YOU DO NOT HAVE TO EDIT ANYTHING BELOW
+
+
+
+
+
+
+
+
 # static global variables
 my $LOGFILE;
 my $URI;
 my $TEMPLATE;
-my $OPTIONS_FILE = "./options.cfg";
 my $VERSION = "0.5.1-beta, 05.06.2007";
 my $CREATE_RDF;
 my $RDF_FILE;
@@ -29,6 +47,9 @@ my %TEMPLATE_OPTIONS;
 my $DATE_FORMAT;
 my $IGNORE_QUIT;
 my $CONTACT_NAME;
+my $CSS_PATH;
+my $IMG_PATH;
+my $SCRIPT_PATH;
 
 # nethack stores various statistics in abbreviated form
 # these maps abbreviated to full form
@@ -111,6 +132,9 @@ my %quickstat = %{&quickstat};
 $template->param( version => $VERSION);
 $template->param( hostname => $URI);
 $template->param( contact_name => $CONTACT_NAME);
+$template->param( css_path => $CSS_PATH);
+$template->param( img_path => $IMG_PATH);
+
 
 my $r = int(rand(6));
 my $qstat;
@@ -742,10 +766,10 @@ sub lastten {
     my $today = time;
 
     # fetch the first 10 games. But, if there is less than 10 games played, only do up to as much.
-    my $limit=0;
-    ($#data+1<10) ? 
-    	$limit=10: 
-	$limit=$#data+1; 
+    my $limit=10;
+    if ($#data+1 < 10) {
+    	$limit = $#data+1;
+    }
     
     for(my $x=0;$x<$limit;$x++) {
 	if (!defined($data[$x])) {
@@ -936,7 +960,21 @@ sub setOptions() {
         }
     
     
-    
+     
+# The directory where css reside
+# relative to the uri
+    $CSS_PATH = $OPTIONS{'css_path'};
+    if (!defined($CSS_PATH)) {
+        $CSS_PATH="css/";
+    }
+ 
+# The directory where images reside
+# relative to the uri
+    $IMG_PATH = $OPTIONS{'img_path'};
+    if (!defined($IMG_PATH)) {
+        $IMG_PATH="";
+    }
+ 
 # The directory where templates reside
 #
     $TEMPLATE = $OPTIONS{'templatedir'};

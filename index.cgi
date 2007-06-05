@@ -740,9 +740,15 @@ sub lastten {
     my @entries;
     my $today = time;
 
-    for (my $x=0;$x<10;$x++) {
+    # fetch the first 10 games. But, if there is less than 10 games played, only do up to as much.
+    ($#data<9) ? 
+    	my $limit=$#data+1: 
+	my $limit=10; 
+
+    for(my $x=0;$x<$limit;$x++) {
+	
 	my %record=%{$data[$x]};
-    my $date = mkdate($record{end_date});
+	my $date = mkdate($record{end_date});
 	
 	my $color="";
 	if (($today - $record{end_date}) <= 604800) {

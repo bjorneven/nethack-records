@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I.
+#!/usr/bin/perl -TwI.
 #
 # Bjorn Even Wahlstrom "bjorn at wahlstroem dot org"
 # 
@@ -132,7 +132,7 @@ if ($r==0) {    # today
 $template->param( quickstat => $qstat);
 
 print "Content-type: text/html\n";
-print "X-Nethack-Games: $#data\n\n";
+print "X-Nethack-Games: $#data+1\n\n";
 
 
 print $template->output;
@@ -273,8 +273,9 @@ sub parseFile {
     
     # iterating..
     # each %record is by default located in $_
-    for (my $x=0;$x < $#data;$x++) {
-        
+    for (my $x=0;$x < $#data+1;$x++) {
+ 
+ 	# If they have the same score, they have equal rank, but different place in the array.
         if ($previous_score != $data[$x]->{exp}) {
             $real_rank = $place;
             $previous_score = $data[$x]->{exp};
@@ -613,8 +614,8 @@ sub quickstat {
     }
     my @tmp = keys %distinct_games;
     my $number_distinct = $#tmp;
-    my $male_percent = $male_number/$#data *100;
-    my $female_percent = $female_number/$#data *100;
+    my $male_percent = $male_number/($#data+1) *100;
+    my $female_percent = $female_number/($#data+1) *100;
 
     if ($male_percent=~/^(\d+)\..+$/) {
         $male_percent=$1;
@@ -741,12 +742,15 @@ sub lastten {
     my $today = time;
 
     # fetch the first 10 games. But, if there is less than 10 games played, only do up to as much.
-    ($#data<9) ? 
-    	my $limit=$#data+1: 
-	my $limit=10; 
-
+    my $limit=0;
+    ($#data+1<10) ? 
+    	$limit=10: 
+	$limit=$#data+1; 
+    
     for(my $x=0;$x<$limit;$x++) {
-	
+	if (!defined($data[$x])) {
+		die("Array out of bounds in lastten()");
+	}
 	my %record=%{$data[$x]};
 	my $date = mkdate($record{end_date});
 	

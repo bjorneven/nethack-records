@@ -5,8 +5,8 @@
 # Contributions by
 # Casey Zacek "bogleg at bogleg dot org"
 
-# $Id: records.cgi 47 2004-03-06 01:21:28Z bjorn $
-# $URL$
+# $Id$
+# $URL: https://fribyte.uib.no/svn/nethack-records/trunk/index.cgi $
 use strict;
 use lib './lib';
 use POSIX qw(strftime mktime);

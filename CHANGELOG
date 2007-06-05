@@ -32,6 +32,7 @@
 #		05.06.2007 Fixed bug with empty logfile
 #		05.06.2007 Added alternative css-file
 #		05.06.2007 Added contact-person to options-file
+#		05.06.2007 Fixed bug that appeared with <10 persons in log
+#		05.06.2007 Fixed bug that did not give first game a rank
 
 
-#		

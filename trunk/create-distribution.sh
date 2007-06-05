@@ -1,6 +1,6 @@
 #!/bin/bash
 DATE=`date -I`
-VERSION=0.5-$DATE
+VERSION=0.5.1-beta-$DATE
 BASEDIR=dist/Nethack-Records-$VERSION
 
 mkdir -p $BASEDIR/lib/HTML

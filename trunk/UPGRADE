@@ -1,13 +1,15 @@
 Upgrading from 0.5.0 to 0.5.1
 ------------------------------
 
-* Make a backup of your original options.cfg file, and possibly the 
-  logfile if it is kept in the same folder.
+* Make a backup of your options.cfg
 * Unpack the new 0.5.1 installation over the old installation, 
   or make a new directory.
+* Copy options.cfg-default to options.cfg, or edit the index.cgi 
+  to reflect the name of this file.
+* Take the old values from your backup options.cfg and merge them
+  into the new.
 * There is a small change to the options.cfg file, but otherwise
   all your options from the original options file is compatible 
-  with the new. You have to merge your old options into the new one
-  manually.
+  with the new.
 
 

@@ -6,6 +6,9 @@
 <head>
 
     <title>NetHack - A dynamic survey</title>
+    <TMPL_IF NAME="create_rdf">
+    	  <link rel="alternate" type="application/rss+xml" title="Nethack-records - The last ten games" href="<TMPL_VAR NAME="rss">">
+    </TMPL_IF>
     <link href='<TMPL_VAR NAME=css_path>nethack.css' rel='stylesheet' type='text/css' media="screen" title="Modern" />
     <link href='<TMPL_VAR NAME=css_path>nethack-alt.css' rel='stylesheet' type='text/css' media="screen" title="Alternative" />
     <link href='<TMPL_VAR NAME=css_path>nethackVer4.css' rel='alternate stylesheet' type='text/css' media="screen" title="Nethack ver 0.4"/>
@@ -14,6 +17,10 @@
 <body>
 
 <div id="header">
+      <TMPL_IF NAME="create_rdf">
+
+  	<a href="http://feedvalidator.org/check.cgi?url=<TMPL_VAR NAME="rss">"><img src="<TMPL_VAR NAME=img_path>valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="1px"/></a>
+      </TMPL_IF>
 
 	<a href="http://validator.w3.org/check?uri=<TMPL_VAR NAME="hostname"><TMPL_VAR NAME="uri">"><img src="<TMPL_VAR NAME=img_path>valid-xhtml10.png" alt="Valid xhtml" title="Hah, this site is valid xhtml strict 1.0" /></a>	
 

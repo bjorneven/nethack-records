@@ -37,5 +37,7 @@
 #		06.06.2007 Fixed rss-validation error
 #		06.06.2007 Better documentation regarding cgi-bin/ restrictions
 #		06.06.2007 css and img/ directory can now be easily moved
+#		06.06.2007 Fixed bug regarding matching of death-causes. Thanks 			   to Garrison Benson.
+
 
 

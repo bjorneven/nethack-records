@@ -34,5 +34,8 @@
 #		05.06.2007 Added contact-person to options-file
 #		05.06.2007 Fixed bug that appeared with <10 persons in log
 #		05.06.2007 Fixed bug that did not give first game a rank
+#		06.06.2007 Fixed rss-validation error
+#		06.06.2007 Better documentation regarding cgi-bin/ restrictions
+#		06.06.2007 css and img/ directory can now be easily moved
 
 

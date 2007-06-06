@@ -11,7 +11,7 @@ sub init() {
         $opfile = "./options.cfg";
     }
     
-    open (FILE, $opfile) or die("Could not load optionsfile: $!");
+    open (FILE, $opfile) or die("Could not load options file $opfile: $!");
     @file = <FILE>;
     close(FILE);
     

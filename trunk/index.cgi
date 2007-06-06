@@ -487,9 +487,16 @@ sub stat {
         my %r = %{$_};
 # 	this hack may cause unwanted functionality
 #       if (lc($r{$type_name}) =~ /^$type/i) {
-        if (lc($r{$type_name}) eq $type) {
+        if (lc($r{$type_name})=~/^$type/i) {
             push(@games,\%r);
-        }
+        } elsif ($type eq "helpless") {
+	    if	(lc($r{$type_name}) =~ /while helpless/i) { #special case
+            push(@games,\%r);
+	    
+	    }
+	}
+
+		
     }
 
     my $counter = 1;

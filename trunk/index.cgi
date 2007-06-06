@@ -37,11 +37,13 @@ my $OPTIONS_FILE = "./options.cfg";
 
 # static global variables
 my $LOGFILE;
-my $URI;
+my $BASE_URI;
+my $FULL_URI;
 my $TEMPLATE;
 my $VERSION = "0.5.1-beta, 05.06.2007";
 my $CREATE_RDF;
 my $RDF_FILE;
+my $RDF_DESC;
 my %OPTIONS;
 my %TEMPLATE_OPTIONS;
 my $DATE_FORMAT;
@@ -125,15 +127,18 @@ if ($sortType eq "today") {
 # Generates an RDF-file
 # should be moved, connected to a script option or something
 if ($CREATE_RDF) {
+
+    $template->param( create_rdf => 1);
     &genRSS;
 }
 
 my %quickstat = %{&quickstat};
 $template->param( version => $VERSION);
-$template->param( hostname => $URI);
+$template->param( hostname => $FULL_URI);
 $template->param( contact_name => $CONTACT_NAME);
 $template->param( css_path => $CSS_PATH);
 $template->param( img_path => $IMG_PATH);
+$template->param( rss => "$BASE_URI$RDF_FILE");
 
 
 my $r = int(rand(6));
@@ -323,7 +328,8 @@ sub genRSS {
 
     print FILE "\t<channel>\n";
     print FILE "\t\t<title>Nethack daily statistics</title>\n";
-    print FILE "\t\t<link>$URI</link>\n";
+    print FILE "\t\t<link>$FULL_URI</link>\n";
+    print FILE "\t\t<description>$RDF_DESC</description>\n";
     print FILE "\t</channel>\n";
     my $today = time;
     foreach (@data) {
@@ -947,16 +953,17 @@ sub setOptions() {
     
 # Specify the location of this script
 #
-    $URI = $OPTIONS{'uri'};
+    $BASE_URI = $OPTIONS{'uri'};
+    
     my $filename = $0;
     
     $filename =~ s/^\/.+\///;   # remove full path before filename
         $filename =~ s/\?.+$//;      # might also be ?blablbl=asdasd attributes in PUT request
         
-        if (!defined($URI)) {
-            $URI="http://example.url/$filename";
+        if (!defined($BASE_URI)) {
+            $FULL_URI="http://example.url/$filename";
         } else {
-            $URI = "$URI"."$filename";
+            $FULL_URI = "$BASE_URI"."$filename";
         }
     
     
@@ -1000,6 +1007,13 @@ sub setOptions() {
     if (!defined($RDF_FILE)) {
         $RDF_FILE = "./today.rdf";
     }
+# Specify RDF-description
+# Only applicable if CREATE_RDF is true
+    $RDF_DESC = $OPTIONS{'rdf_desc'};
+    if (!defined($RDF_DESC)) {
+        $RDF_DESC = "The last ten games played on this nethack server.";
+    }
+
 
 # Pick a date format (for POSIX::strftime())
     $DATE_FORMAT = $OPTIONS{'date_format'};

@@ -320,24 +320,39 @@ sub parseFile {
 sub genRSS {
     open(FILE,">$RDF_FILE") or die("Could not create RDF-file");
     print FILE "<?xml version=\"1.0\"?>\n";
-    print FILE "<rdf:RDF
-    xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
-    xmlns=\"http://my.netscape.com/rdf/simple/0.9/\"
-    >\n";
-
+    print FILE "<rss version=\"2.0\">\n";
 
     print FILE "\t<channel>\n";
     print FILE "\t\t<title>Nethack daily statistics</title>\n";
     print FILE "\t\t<link>$FULL_URI</link>\n";
     print FILE "\t\t<description>$RDF_DESC</description>\n";
-    print FILE "\t</channel>\n";
+    
+    @data=@{&byorig(\@data)};
     my $today = time;
-    foreach (@data) {
-        my %record=%{$_};
-        my $date = mkdate($record{date});
-        my $color="";
 
-        if (($today - $record{date}) <= 86400) {
+    # fetch the first 10 games. But, if there is less than 10 games played, only do up to as much.
+    my $limit=10;
+    if ($#data+1 < 10) {
+    	$limit = $#data+1;
+    }
+    
+    for(my $x=0;$x<$limit;$x++) {
+	if (!defined($data[$x])) {
+		die("Array out of bounds in lastten()");
+	}
+	my %record=%{$data[$x]};
+	my $date = mkdate($record{end_date});
+	
+	my $color="";
+	if (($today - $record{end_date}) <= 604800) {
+	    $color="class='uke'";
+	}
+	if (($today - $record{end_date}) <= 86400) {
+	    $color="class='dag'";
+	}
+	
+        $record{date}=$date;
+        $record{color}=$color;
 
             my %entry = (   name =>$record{name},
                             class => $record{class},
@@ -351,14 +366,19 @@ sub genRSS {
                             exp => $record{exp}
                         );
 
+		  # RFC822 (actually RFC2822, as the year has 4 digits)
+		 my $rfc_date = strftime("%a, %d %b %Y %H:%M:%S %z", localtime($record{end_date}));
+
             print FILE "\t\t<item>\n";
             print FILE "\t\t\t<title>$record{name}, $record{class} with $record{exp} points</title>\n";
             print FILE "\t\t\t<description>$record{name}, $record{class} with $record{exp} points</description>\n";
+	    print FILE "\t\t\t<pubDate>".$rfc_date."</pubDate>\n";
+	    print FILE "\t\t\t<guid>".$FULL_URI."?game=$record{place_orig}</guid>\n";
             print FILE "\t\t</item>\n";
-        }
     }
 
-    print FILE "</rdf:RDF>";
+    print FILE "\t</channel>\n";
+    print FILE "</rss>";
 
 }
 

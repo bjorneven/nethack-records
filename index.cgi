@@ -1,4 +1,4 @@
-#!/usr/bin/perl -TwI.
+#!/usr/bin/perl -I.
 #
 # Bjorn Even Wahlstrom "bjorn at wahlstroem dot org"
 # Read LICENSE for distribution rights

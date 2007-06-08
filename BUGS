@@ -1,0 +1,7 @@
+Known bugs in nethack records 0.5.1
+-----------------------------------
+
+ - There is some kind of weird css-error that causes the site not to fully validate.
+ - Characters - link is mostly useless
+ - Too much sorting going on, this script is propably a bit CPU-intensitive 
+ on large sites

@@ -40,7 +40,7 @@ my $LOGFILE;
 my $BASE_URI;
 my $FULL_URI;
 my $TEMPLATE;
-my $VERSION = "0.5.1-beta, 05.06.2007";
+my $VERSION = "0.5.1, 08.06.2007";
 my $CREATE_RDF;
 my $RDF_FILE;
 my $RDF_DESC;

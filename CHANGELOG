@@ -38,6 +38,6 @@
 #		06.06.2007 Better documentation regarding cgi-bin/ restrictions
 #		06.06.2007 css and img/ directory can now be easily moved
 #		06.06.2007 Fixed bug regarding matching of death-causes. Thanks 			   to Garrison Benson.
-
+# version 0.5.1	08.06.2007 0.5.1 Released
 
 

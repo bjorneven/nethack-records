@@ -1,5 +1,5 @@
 Nethack-Records
----------------
+===============
 Nethack-records is a script that lets users view statistics from a nethack logfile. 
 
 It features an on-demand statistics generator for Nethack and is meant to be run on a webserver. It has several types of statistics, ranging from character info to daily and weekly stats. It is implemented with a modern template system, and is very customizable.
@@ -22,9 +22,11 @@ Future enhancements include:
 
 Current version is 0.5.1, 08.06.2007
 
-Installation Instructions
--------------------------
+# View a demo
+[http://nethack.uib.no/statistikk/](http://nethack.uib.no/statistikk/)
 
+Installation Instructions
+=========================
 Nethack-Records requires
  - Perl 5 and CGI capable webserver.
  - It also requires HTML::Template installed,
@@ -42,14 +44,13 @@ Oh, by the way, the scripts need access to
  - Create an options.cfg. Example-file as options.cfg-default included.
 
 
-Modify the placement of options.cfg
------------------------------------
+# Modify the placement of options.cfg
+
 
 If you need to move the options file to another place, edit index.cgi to reflect
 this. The webserver needs read-permissions to this file.
 
-Installation on a cgi-bin/ environment
---------------------------------------
+# Installation on a cgi-bin/ environment
 
 Often, the cgi-bin/ folder of Apache has very restrictive permissions. Therefore
 the webbrowser cannot access the css and image-files placed by default inside the 
